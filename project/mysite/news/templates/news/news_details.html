@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+{% load django_bootstrap5 %}
+<head>
+{% bootstrap_css %}
+<meta charset="utf-8">
+<title>news_details</title>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary fixed-top" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="">UltraNews</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">页面选择</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/">首页</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/news_list">新闻列表页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categories">新闻分类页</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <br><br><br>
+
+    <figure class="text-center">
+        <blockquote class="blockquote">
+          <h1>{{ news.title }}</h1>
+        </blockquote>
+    </figure>
+    <div class="d-flex flex-row-reverse">
+        <div class="p-5"><a href="{{ news.link }}">原新闻链接</a></div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <dl class="row" >
+        <dt class="col-sm-3">作者</dt>
+        <dd class="col-sm-9">{{ news.author }}</dd>
+      
+        <dt class="col-sm-3">发表时间</dt>
+        <dd class="col-sm-9">{{ news.pub_date }}</dd>
+      
+        <dt class="col-sm-3">按新闻来源分类</dt>
+        <dd class="col-sm-9">{{ news.source }}</dd>
+      
+    </dl>
+    </div>
+    <figure class="p-5">
+        <blockquote class="blockquote">
+          <h5>新闻简介：</h5>
+          <p>{{ news.intro }}</p>
+        </blockquote>
+    </figure>
+    
+    {% for num in loop %}
+        {% load static %}
+        <div class="text-center">
+            <img src="../static/news/imgs/news{{ n }}_img{{ num }}.png"/>
+        </div>
+        
+    {% endfor %}
+    <br>
+    <figure class="p-5">
+        <blockquote class="blockquote">
+          <h5>正文内容：</h5>
+          <p class="lh-lg">{{ news.content|linebreaksbr }}</p>
+        </blockquote>
+    </figure>
+    
+    <div class="p-5">
+    <form action="/comment/{{ news.id }}", method="post"> 
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input type="text" name="user" class="form-control" id="floatingUser" placeholder="user_name">
+            <label for="floatingUser">用户</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" name="content" class="form-control" id="floatingContent" placeholder="con">
+            <label for="floatingContent">评论内容</label>
+        </div>
+        <input type="submit" value="提交" class="form-control">
+    </form>
+</div>
+    <br>
+    <figure class="text-center">
+        <blockquote class="blockquote">
+          <p>评论区</p>
+        </blockquote>
+    </figure>
+    {% if comments %}
+        <ul>
+            {% for comment in comments %}
+            <div class="mx-4">
+                <div class="card text-bg-light mb-3 p-5" >
+                    <div class="card-body">
+                        用户：{{ comment.user }}<br>
+                        评论时间：{{ comment.create_time }}<br>
+                        评论内容：<br>
+                        {{ comment.comment_content }}<br>
+                    </div>
+                    <form action="/delete_comment/{{ news.id }}/{{ comment.id }}", method="post"> 
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-dark">删除本条评论</button>
+                    </form>
+                </div>
+            </div>    
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>暂时还没有评论。</p>
+    {% endif %}
+    {% bootstrap_javascript %}
+</body>
+</html>

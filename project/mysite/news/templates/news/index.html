@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+{% load django_bootstrap5 %}
+<head>
+{% bootstrap_css %}
+<meta charset="utf-8">
+<title>index</title>
+</head>
+<body>
+    <!--页边栏及搜索功能-->
+    <nav class="navbar bg-body-tertiary fixed-top" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="">UltraNews</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">页面选择</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/">首页</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/news_list">新闻列表页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categories">新闻分类页</a>
+                </li>
+              </ul>
+              
+              <form action="/search_results/", method="get">
+                {% csrf_token %}
+                <input type="text" name="keyword" placeholder="请输入关键词或文本">
+                <br>
+                <label for="sorting">排序方式：</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sorting" value="time" checked>按时间排序
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sorting" value="hotness">按热度排序
+                  </div>
+                <br>
+                <label for="categories">分类：</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="新浪数码" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        新浪数码
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="新浪科技" id="defaultCheck2">
+                    <label class="form-check-label" for="defaultCheck2">
+                        新浪科技
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="IT之家" id="defaultCheck3">
+                    <label class="form-check-label" for="defaultCheck3">
+                        IT之家
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="快科技" id="defaultCheck4">
+                    <label class="form-check-label" for="defaultCheck4">
+                        快科技
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="太平洋电脑网" id="defaultCheck5">
+                    <label class="form-check-label" for="defaultCheck5">
+                        太平洋电脑网
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="中关村在线" id="defaultCheck6">
+                    <label class="form-check-label" for="defaultCheck6">
+                        中关村在线
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="中国家电网" id="defaultCheck7">
+                    <label class="form-check-label" for="defaultCheck7">
+                        中国家电网
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="CNMO" id="defaultCheck8">
+                    <label class="form-check-label" for="defaultCheck8">
+                        CNMO
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="市场资讯" id="defaultCheck9">
+                    <label class="form-check-label" for="defaultCheck9">
+                        市场资讯
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="媒体滚动" id="defaultCheck10">
+                    <label class="form-check-label" for="defaultCheck10">
+                        媒体滚动
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="新浪科技综合" id="defaultCheck11">
+                    <label class="form-check-label" for="defaultCheck11">
+                        新浪科技综合
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="澎湃新闻" id="defaultCheck12">
+                    <label class="form-check-label" for="defaultCheck12">
+                        澎湃新闻
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="财联社" id="defaultCheck13">
+                    <label class="form-check-label" for="defaultCheck13">
+                        财联社
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="快科技2018" id="defaultCheck14">
+                    <label class="form-check-label" for="defaultCheck14">
+                        快科技2018
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="界面新闻" id="defaultCheck15">
+                    <label class="form-check-label" for="defaultCheck15">
+                        界面新闻
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="categories" value="其他" id="defaultCheck16">
+                    <label class="form-check-label" for="defaultCheck16">
+                        其他
+                    </label>
+                </div>
+
+                <input class="btn btn-primary" type="submit" value="搜索">
+                
+            </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+    
+
+    <!--随机新闻展示-->
+    <br><br><br>
+    <figure class="text-center">
+        <blockquote class="blockquote">
+          <p>随机新闻速览</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+          Feel free to click and read it.
+        </figcaption>
+      </figure>
+    <ul>
+        {% for news in random_news_list %}
+            <div class="mx-4">
+            <div class="card text-bg-light mb-3 p-3" >
+                <div class="card-body">
+                    <a href= "/news/{{ news.id }}" >{{ news.title }}</a><br>
+                    作者id: {{ news.author }}<br>
+                    创建时间: {{ news.pub_date }}<br>
+                    阅读热度：{{ news.hotness }}
+                    评论数量: {{ news.comment_count }} 
+                    <br>
+                    新闻简介: 
+                    <br>
+                    {{ news.intro }}
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+    </ul>
+    <button onclick="window.location.reload()" class="btn btn-outline-dark">更新</button>
+    {% bootstrap_javascript %}
+</body>
+</html>

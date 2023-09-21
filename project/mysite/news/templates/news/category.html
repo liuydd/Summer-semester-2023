@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+{% load django_bootstrap5 %}
+<head>
+{% bootstrap_css %}
+<meta charset="utf-8">
+<title>category</title>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary fixed-top" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="">UltraNews</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">页面选择</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/">首页</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/news_list">新闻列表页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categories">新闻分类页</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <br><br><br>
+    <figure class="text-center">
+        <blockquote class="blockquote">
+          <p>新闻分类类别速览</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+          Feel free to click and read it.
+        </figcaption>
+      </figure>
+
+
+    <ul>
+        {% for category, cate_count in categories %}
+        <div class="mx-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    新闻来源
+                </div>                
+                <div class="card-body">
+                <h5 class="card-title">{{ category }}</h5>
+                <p class="card-text">该分类下新闻数量：{{ cate_count }}</p>
+                <a href="categories/{{ category }}" class="btn btn-primary">查看该分类下的新闻</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </ul>
+        
+    
+
+    
+
+    {% bootstrap_javascript %}
+</body>
+</html>
